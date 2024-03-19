@@ -23,6 +23,6 @@ public class ListArg extends AbstractCommand {
 
     @Override
     public void commandHandler(Player player, String[] args) {
-        player.sendMessage(new Config().getRegions());
+        player.sendMessage(new Config().getUUIDsAsString());
     }
 }

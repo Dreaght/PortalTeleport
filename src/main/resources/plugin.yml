@@ -5,5 +5,5 @@ author: Dreaght
 description: Plugin for making portals that can be used to teleport everywhere!
 api-version: '1.18'
 commands:
-  zombies:
+  portal:
     description: Portal management

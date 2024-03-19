@@ -3,6 +3,7 @@ package org.dreaght.portalteleport;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dreaght.portalteleport.commands.PortalCommand;
 import org.dreaght.portalteleport.listeners.OnItemUse;
+import org.dreaght.portalteleport.listeners.OnMove;
 
 import java.util.Objects;
 
@@ -21,6 +22,8 @@ public final class PortalTeleport extends JavaPlugin {
         new Config().resetConfig();
 
         getServer().getPluginManager().registerEvents(new OnItemUse(), this);
+        getServer().getPluginManager().registerEvents(new OnMove(), this);
+
         Objects.requireNonNull(getCommand("portal")).setExecutor(new PortalCommand());
     }
 }

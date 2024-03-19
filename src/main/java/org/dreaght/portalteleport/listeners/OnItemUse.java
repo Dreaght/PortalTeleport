@@ -27,29 +27,34 @@ public class OnItemUse implements Listener {
         if (event.getClickedBlock() == null) { return; }
         Location blockLocation = event.getClickedBlock().getLocation();
 
+        PortalManager.addPlayer(player);
+
         if (event.getAction().name().contains("LEFT")) {
-            PortalManager.updateLocationA(player, blockLocation);
+            PortalManager.setLocation1(player, blockLocation);
             player.getInventory().setItemInMainHand(PortalItems.RED_POINT);
         } else if (event.getAction().name().contains("RIGHT")) {
-            PortalManager.updateLocationB(player, blockLocation);
+            PortalManager.setLocation2(player, blockLocation);
             player.getInventory().setItemInMainHand(PortalItems.BLUE_POINT);
         }
 
         if (PortalManager.hasAllLocations(player)) {
             handlePortalCreation(player);
         }
+
+        event.setCancelled(true);
     }
 
     private void handlePortalCreation(Player player) {
         player.getInventory().setItemInMainHand(null);
-        PortalManager.removePlayer(player);
 
         String portalID = UUID.randomUUID().toString();
 
         Config config = new Config();
 
         config.createRegion(portalID);
-        config.setPos1(portalID, PortalManager.getLocationA(player));
-        config.setPos2(portalID, PortalManager.getLocationB(player));
+        config.setPos1(portalID, PortalManager.getLocation1(player));
+        config.setPos2(portalID, PortalManager.getLocation2(player));
+
+        PortalManager.removePlayer(player);
     }
 }

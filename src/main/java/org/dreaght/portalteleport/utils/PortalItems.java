@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PortalItems {
-    public static final ItemStack BLUE_POINT = createItemStack(Material.LIME_DYE, 1,
+    public static final ItemStack BLUE_POINT = createItemStack(Material.LAPIS_LAZULI, 1,
             (ChatColor.BLUE + "Blue Point" + ChatColor.GRAY + "(Left Click)"),
             new ArrayList<>(Arrays.asList(ChatColor.GRAY + "Use this to indicate where portal begins.")));
 

@@ -3,6 +3,7 @@ package org.dreaght.portalteleport;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
+import org.dreaght.portalteleport.utils.Region;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +20,31 @@ public class Config {
         plugin.saveConfig();
     }
 
-    public String getRegions() {
-        List<String> keys = new ArrayList<>(config.getConfigurationSection("regions").getKeys(false));
-        return String.join(", ", keys);
+    public String getUUIDsAsString() {
+        return String.join(", ", getRegionUUIDs());
+    }
+
+    public List<Region> getAllRegions() {
+        List<String> keys = getRegionUUIDs();
+        List<Region> regions = new ArrayList<>();
+
+        keys.forEach(key -> regions.add(getRegionByUUID(key)));
+
+        return regions;
+    }
+
+    private List<String> getRegionUUIDs() {
+        return new ArrayList<>(config.getConfigurationSection("regions").getKeys(false));
+    }
+
+    public Region getRegionByUUID(String uuid) {
+        Location location1 = getLocationFromString(getPos1(uuid));
+        Location location2 = getLocationFromString(getPos2(uuid));
+
+        Region region = new Region(location1, location2);
+        region.setUUID(uuid);
+
+        return region;
     }
 
     public void createRegion(String regionName) {
@@ -30,6 +53,7 @@ public class Config {
 
     public void removeRegion(String regionName) {
         config.set(("regions." + regionName), null);
+        plugin.saveConfig();
     }
 
     public String getPos1(String regionName) {
@@ -42,10 +66,12 @@ public class Config {
 
     public void setPos1(String regionName, Location location) {
         config.set(("regions." + regionName + ".pos1"), locationToString(location));
+        plugin.saveConfig();
     }
 
     public void setPos2(String regionName, Location location) {
         config.set(("regions." + regionName + ".pos2"), locationToString(location));
+        plugin.saveConfig();
     }
 
     private String locationToString(Location location) {

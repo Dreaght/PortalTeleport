@@ -6,9 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.dreaght.portalteleport.commands.arg.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PortalCommand implements CommandExecutor, TabCompleter {
     private final Map<String, AbstractCommand> subcommands;
@@ -31,7 +29,12 @@ public class PortalCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
-        return null;
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length == 1) {
+            return new ArrayList<>(subcommands.keySet());
+        } else if (subcommands.containsKey(args[0].toLowerCase())) {
+            return subcommands.get(args[0].toLowerCase()).onTabComplete(sender, command, alias, args);
+        }
+        return Collections.emptyList();
     }
 }
