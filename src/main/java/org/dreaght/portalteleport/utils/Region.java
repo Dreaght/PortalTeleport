@@ -7,6 +7,9 @@ public class Region {
     private Location location1;
     private Location location2;
 
+    private boolean confirmed;
+    private String command;
+
     public Region(Location location1, Location location2) {
         this.location1 = location1;
         this.location2 = location2;
@@ -39,5 +42,21 @@ public class Region {
 
     public void setLocation2(Location location2) {
         this.location2 = location2;
+    }
+
+    public boolean isConfirmed() {
+        return this.confirmed;
+    }
+
+    public void setConfirmed(boolean state) {
+        this.confirmed = state;
+    }
+
+    public String getCommand() {
+        return this.command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
     }
 }

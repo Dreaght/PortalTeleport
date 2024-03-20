@@ -4,21 +4,22 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.dreaght.portalteleport.Config;
 import org.dreaght.portalteleport.PortalTeleport;
 import org.dreaght.portalteleport.commands.AbstractCommand;
+import org.dreaght.portalteleport.utils.PortalMenu;
+import org.dreaght.portalteleport.utils.Region;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RemoveArg extends AbstractCommand {
+public class MenuArg extends AbstractCommand {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         List<String> completions = new ArrayList<>();
 
         if (args.length == 1) {
-            completions.add("remove");
+            completions.add("menu");
         }
 
         return completions;
@@ -27,13 +28,18 @@ public class RemoveArg extends AbstractCommand {
     @Override
     public void commandHandler(Player player, String[] args) {
         if (args.length < 2) {
-            sendUsageMessage(player, "remove <region ID>");
+            sendUsageMessage(player, "menu <region ID>");
             return;
         }
 
-        new Config().removeRegion(args[1]);
-        PortalTeleport.getRegionMarkers().cancelMarkingRegion(args[1]);
+        Config config = new Config();
+        if (!config.isRegionExist(args[1])) {
+            player.sendMessage(ChatColor.RED + "That portal doesn't exist.");
+            return;
+        }
 
-        player.sendMessage(ChatColor.GREEN + "Done! The portal has been removed.");
+        Region region = config.getRegionByUUID(args[1]);
+
+        PortalMenu.handleMenuCreation(player, region);
     }
 }

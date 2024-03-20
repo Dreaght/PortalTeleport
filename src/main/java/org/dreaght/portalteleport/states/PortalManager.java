@@ -1,7 +1,8 @@
-package org.dreaght.portalteleport.utils;
+package org.dreaght.portalteleport.states;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.dreaght.portalteleport.utils.Region;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +12,14 @@ public class PortalManager {
 
     public static String getPlayerLocations() {
         return playerLocations.toString();
+    }
+
+    public static Region getRegion(Player player) {
+        return playerLocations.get(player);
+    }
+
+    public static boolean containsPlayer(Player player) {
+        return playerLocations.containsKey(player);
     }
 
     public static boolean hasAllLocations(Player player) {
@@ -37,7 +46,6 @@ public class PortalManager {
 
     public static void setLocation1(Player player, Location location1) {
         if (!playerLocations.containsKey(player)) {
-            playerLocations.put(player, new Region(location1, null));
             return;
         }
 
@@ -50,7 +58,6 @@ public class PortalManager {
 
     public static void setLocation2(Player player, Location location2) {
         if (!playerLocations.containsKey(player)) {
-            playerLocations.put(player, new Region(null, location2));
             return;
         }
 
@@ -58,8 +65,6 @@ public class PortalManager {
     }
 
     public static void removePlayer(Player player) {
-        if (playerLocations.containsKey(player)) {
-            playerLocations.remove(player);
-        }
+        playerLocations.remove(player);
     }
 }

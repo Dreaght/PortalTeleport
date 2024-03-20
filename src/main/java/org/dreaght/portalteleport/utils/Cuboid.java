@@ -2,6 +2,7 @@ package org.dreaght.portalteleport.utils;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 
 public class Cuboid {
     private final World world;
@@ -71,6 +72,20 @@ public class Cuboid {
         return x >= minX && x <= maxX &&
                 y >= minY && y <= maxY &&
                 z >= minZ && z <= maxZ;
+    }
+
+    public void iterateBlocks(BlockConsumer consumer) {
+        for (int x = minX; x <= maxX; x++) {
+            for (int y = minY; y <= maxY; y++) {
+                for (int z = minZ; z <= maxZ; z++) {
+                    consumer.consume(world.getBlockAt(x, y, z));
+                }
+            }
+        }
+    }
+
+    public interface BlockConsumer {
+        void consume(Block block);
     }
 
     public boolean overlaps(Cuboid cuboid) {

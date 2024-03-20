@@ -4,6 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 import org.dreaght.portalteleport.commands.arg.*;
 
 import java.util.*;
@@ -14,12 +15,19 @@ public class PortalCommand implements CommandExecutor, TabCompleter {
     public PortalCommand() {
         this.subcommands = new HashMap<>();
         subcommands.put("make", new MakeArg());
-        subcommands.put("remove", new RemoveArg());
         subcommands.put("list", new ListArg());
+        subcommands.put("remove", new RemoveArg());
+        subcommands.put("menu", new MenuArg());
+        subcommands.put("clear", new ClearArg());
+        subcommands.put("cancel", new CancelArg());
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!(sender instanceof Player)) {
+            return false;
+        }
+
         if (args.length > 0 && subcommands.containsKey(args[0].toLowerCase())) {
             subcommands.get(args[0].toLowerCase()).onCommand(sender, command, label, args);
         } else {

@@ -3,28 +3,32 @@ package org.dreaght.portalteleport.listeners;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.dreaght.portalteleport.Config;
+import org.dreaght.portalteleport.utils.PortalMenu;
 import org.dreaght.portalteleport.utils.Region;
 
 import java.util.List;
 import java.util.Objects;
 
-public class OnMove implements Listener {
+public class OnSneak implements Listener {
     @EventHandler
-    public void onMove(PlayerMoveEvent event) {
+    public void onSneak(PlayerToggleSneakEvent event) {
         Player player = event.getPlayer();
+
+        if (!event.isSneaking() || !player.isOnGround()) {
+            return;
+        }
 
         List<Region> regions = new Config().getAllRegions();
 
         for (Region region : regions) {
-            if (region.inRegion(Objects.requireNonNull(event.getTo()))) {
-                String command = region.getCommand();
-                if (command == null || !region.isConfirmed()) {
+            if (region.inRegion(Objects.requireNonNull(player.getLocation()))) {
+                if (region.isConfirmed()) {
                     return;
                 }
 
-                player.chat("/" + command);
+                PortalMenu.handleMenuCreation(player, region);
                 return;
             }
         }

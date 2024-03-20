@@ -20,6 +20,10 @@ public class Config {
         plugin.saveConfig();
     }
 
+    public boolean isRegionExist(String uuid) {
+        return config.getConfigurationSection("regions." + uuid) != null;
+    }
+
     public String getUUIDsAsString() {
         return String.join(", ", getRegionUUIDs());
     }
@@ -33,7 +37,7 @@ public class Config {
         return regions;
     }
 
-    private List<String> getRegionUUIDs() {
+    public List<String> getRegionUUIDs() {
         return new ArrayList<>(config.getConfigurationSection("regions").getKeys(false));
     }
 
@@ -43,6 +47,8 @@ public class Config {
 
         Region region = new Region(location1, location2);
         region.setUUID(uuid);
+        region.setConfirmed(getConfirmed(uuid));
+        region.setCommand(getCommandOfRegion(uuid));
 
         return region;
     }
@@ -56,17 +62,43 @@ public class Config {
         plugin.saveConfig();
     }
 
-    public String getPos1(String regionName) {
-        return config.getString("regions." + regionName + ".pos1");
+    public void clearAllRegions() {
+        List<String> keys = getRegionUUIDs();
+        keys.forEach(key -> {
+            removeRegion(key);
+            PortalTeleport.getRegionMarkers().cancelMarkingRegion(key);
+        });
     }
 
-    public String getPos2(String regionName) {
-        return config.getString("regions." + regionName + ".pos2");
+    public String getCommandOfRegion(String uuid) {
+        return config.getString("regions." + uuid + ".command");
+    }
+
+    public void setCommandOfRegion(String uuid, String command) {
+        config.set("regions." + uuid + ".command", command);
+        plugin.saveConfig();
+    }
+
+    public boolean getConfirmed(String uuid) {
+        return config.getBoolean("regions." + uuid + ".confirmed");
+    }
+
+    public void setConfirmed(String uuid, boolean var) {
+        config.set("regions." + uuid + ".confirmed", var);
+        plugin.saveConfig();
+    }
+
+    public String getPos1(String regionName) {
+        return config.getString("regions." + regionName + ".pos1");
     }
 
     public void setPos1(String regionName, Location location) {
         config.set(("regions." + regionName + ".pos1"), locationToString(location));
         plugin.saveConfig();
+    }
+
+    public String getPos2(String regionName) {
+        return config.getString("regions." + regionName + ".pos2");
     }
 
     public void setPos2(String regionName, Location location) {

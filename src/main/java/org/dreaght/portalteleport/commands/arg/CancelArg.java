@@ -1,30 +1,23 @@
 package org.dreaght.portalteleport.commands.arg;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.dreaght.portalteleport.commands.AbstractCommand;
-import org.dreaght.portalteleport.utils.PortalItems;
-import org.dreaght.portalteleport.states.PortalManager;
+import org.dreaght.portalteleport.states.PlayerChatManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MakeArg extends AbstractCommand {
+public class CancelArg extends AbstractCommand {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        List<String> completions = new ArrayList<>();
-
-        if (args.length == 1) {
-            completions.add("make");
-        }
-
-        return completions;
+        return null;
     }
 
     @Override
     public void commandHandler(Player player, String[] args) {
-        PortalManager.addPlayer(player);
-        player.getInventory().addItem(PortalItems.BLUE_POINT);
+        PlayerChatManager.removePlayer(player);
+        player.sendMessage(ChatColor.RED + "You have canceled text input.");
     }
 }

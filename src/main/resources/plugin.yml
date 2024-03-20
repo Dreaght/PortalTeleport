@@ -3,7 +3,7 @@ version: '${project.version}'
 main: org.dreaght.portalteleport.PortalTeleport
 author: Dreaght
 description: Plugin for making portals that can be used to teleport everywhere!
-api-version: '1.18'
+api-version: '1.20'
 commands:
   portal:
     description: Portal management
