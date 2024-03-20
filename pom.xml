@@ -73,15 +73,6 @@
           </execution>
         </executions>
       </plugin>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>2.4</version>
-            <configuration>
-                <outputDirectory>C:\Users\nikit\Desktop\MegaDevTests\plugins</outputDirectory>
-                <finalName>PortalTeleport</finalName>
-            </configuration>
-        </plugin>
     </plugins>
     <resources>
       <resource>
