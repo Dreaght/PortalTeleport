@@ -4,7 +4,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.dreaght.portalteleport.Config;
+import org.dreaght.portalteleport.PortalTeleport;
 import org.dreaght.portalteleport.commands.AbstractCommand;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class ClearArg extends AbstractCommand {
 
     @Override
     public void commandHandler(Player player, String[] args) {
-        new Config().clearAllRegions();
+        PortalTeleport.getCfg().clearAllRegions();
         player.sendMessage(ChatColor.GREEN + "All portals have been removed.");
     }
 }

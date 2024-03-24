@@ -7,6 +7,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.dreaght.portalteleport.Config;
+import org.dreaght.portalteleport.PortalTeleport;
 import org.dreaght.portalteleport.utils.Cuboid;
 import org.dreaght.portalteleport.utils.Region;
 
@@ -49,7 +50,7 @@ public class RegionMarkers {
     }
 
     public void startMarkingAllRegions() {
-        List<Region> regions = new Config().getAllRegions();
+        List<Region> regions = PortalTeleport.getCfg().getAllRegions();
         regions.forEach(this::startMarkingRegion);
     }
 

@@ -8,19 +8,17 @@ import org.dreaght.portalteleport.states.RegionMarkers;
 import java.util.Objects;
 
 public final class PortalTeleport extends JavaPlugin {
-    private static PortalTeleport instance;
     private static RegionMarkers regionMarkers;
+    private static Config config;
 
-    public static PortalTeleport getInstance() {
-        return instance;
+    public static Config getCfg() {
+        return config;
     }
 
     @Override
     public void onEnable() {
-        instance = this;
-
         this.saveDefaultConfig();
-        new Config().resetConfig();
+        config = new Config(this);
 
         getServer().getPluginManager().registerEvents(new OnItemUse(this), this);
         getServer().getPluginManager().registerEvents(new OnMove(), this);

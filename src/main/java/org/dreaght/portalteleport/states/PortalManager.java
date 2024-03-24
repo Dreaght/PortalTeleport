@@ -10,10 +10,6 @@ import java.util.Map;
 public class PortalManager {
     private static Map<Player, Region> playerLocations = new HashMap<>();
 
-    public static String getPlayerLocations() {
-        return playerLocations.toString();
-    }
-
     public static Region getRegion(Player player) {
         return playerLocations.get(player);
     }

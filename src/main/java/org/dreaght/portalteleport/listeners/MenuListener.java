@@ -39,7 +39,7 @@ public class MenuListener implements Listener {
 
     private void handleClickedItem(Player player, ItemStack clickedItem) {
         Region region = PlayerManager.getPlayerRegion(player);
-        Config config = new Config();
+        Config config = PortalTeleport.getCfg();
 
         if (region == null) {
             player.closeInventory();

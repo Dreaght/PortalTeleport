@@ -32,7 +32,7 @@ public class MenuArg extends AbstractCommand {
             return;
         }
 
-        Config config = new Config();
+        Config config = PortalTeleport.getCfg();
         if (!config.isRegionExist(args[1])) {
             player.sendMessage(ChatColor.RED + "That portal doesn't exist.");
             return;

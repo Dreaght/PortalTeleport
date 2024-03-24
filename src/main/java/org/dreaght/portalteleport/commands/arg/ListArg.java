@@ -9,6 +9,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.dreaght.portalteleport.Config;
+import org.dreaght.portalteleport.PortalTeleport;
 import org.dreaght.portalteleport.commands.AbstractCommand;
 import org.dreaght.portalteleport.utils.Cuboid;
 import org.dreaght.portalteleport.utils.Region;
@@ -30,7 +31,7 @@ public class ListArg extends AbstractCommand {
 
     @Override
     public void commandHandler(Player player, String[] args) {
-        List<Region> regions = new Config().getAllRegions();
+        List<Region> regions = PortalTeleport.getCfg().getAllRegions();
 
         if (regions.isEmpty()) {
             player.sendMessage(ChatColor.RED + "There is no portals yet.");

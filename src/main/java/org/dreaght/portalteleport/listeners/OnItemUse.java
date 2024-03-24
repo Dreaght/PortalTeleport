@@ -66,7 +66,7 @@ public class OnItemUse implements Listener {
 
         String portalID = UUID.randomUUID().toString();
 
-        Config config = new Config();
+        Config config = PortalTeleport.getCfg();
 
         config.createRegion(portalID);
         config.setPos1(portalID, PortalManager.getLocation1(player));

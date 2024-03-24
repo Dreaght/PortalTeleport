@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.dreaght.portalteleport.Config;
+import org.dreaght.portalteleport.PortalTeleport;
 import org.dreaght.portalteleport.utils.PortalMenu;
 import org.dreaght.portalteleport.utils.Region;
 
@@ -20,7 +21,7 @@ public class OnSneak implements Listener {
             return;
         }
 
-        List<Region> regions = new Config().getAllRegions();
+        List<Region> regions = PortalTeleport.getCfg().getAllRegions();
 
         for (Region region : regions) {
             if (region.inRegion(Objects.requireNonNull(player.getLocation()))) {

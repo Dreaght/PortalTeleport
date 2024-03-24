@@ -9,8 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Config {
-    private Plugin plugin = PortalTeleport.getInstance();
-    private FileConfiguration config = plugin.getConfig();
+    private Plugin plugin;
+    private FileConfiguration config;
+
+    public Config(Plugin plugin) {
+        this.plugin = plugin;
+        config = plugin.getConfig();
+        resetConfig();
+    }
 
     public void resetConfig() {
         if (config.getString("regions") == null) {
@@ -22,10 +28,6 @@ public class Config {
 
     public boolean isRegionExist(String uuid) {
         return config.getConfigurationSection("regions." + uuid) != null;
-    }
-
-    public String getUUIDsAsString() {
-        return String.join(", ", getRegionUUIDs());
     }
 
     public List<Region> getAllRegions() {

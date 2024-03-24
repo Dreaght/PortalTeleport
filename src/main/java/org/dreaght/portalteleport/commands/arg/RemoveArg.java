@@ -31,7 +31,7 @@ public class RemoveArg extends AbstractCommand {
             return;
         }
 
-        new Config().removeRegion(args[1]);
+        PortalTeleport.getCfg().removeRegion(args[1]);
         PortalTeleport.getRegionMarkers().cancelMarkingRegion(args[1]);
 
         player.sendMessage(ChatColor.GREEN + "Done! The portal has been removed.");
