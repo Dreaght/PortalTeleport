@@ -31,7 +31,6 @@ public class MenuListener implements Listener {
         }
 
         Player player = (Player) event.getWhoClicked();
-
         handleClickedItem(player, clickedItem);
 
         event.setCancelled(true);
@@ -50,22 +49,29 @@ public class MenuListener implements Listener {
             player.closeInventory();
         } else if (clickedItem.isSimilar(PortalItems.REGION_CONFIRM)) {
             config.setConfirmed(region.getUUID(), true);
-            PlayerManager.removePlayer(player);
-            PortalTeleport.getRegionMarkers().cancelMarkingRegion(region.getUUID());
+            removePlayer(player, region);
         } else if (clickedItem.isSimilar(PortalItems.REGION_DELETE)) {
             config.removeRegion(region.getUUID());
-            PlayerManager.removePlayer(player);
-            PortalTeleport.getRegionMarkers().cancelMarkingRegion(region.getUUID());
+            removePlayer(player, region);
         } else if (Objects.requireNonNull(clickedItem.getItemMeta()).getDisplayName().equals(ChatColor.GREEN + "Action")) {
             player.sendMessage("");
             player.sendMessage(ChatColor.YELLOW + "Enter the command below! " + ChatColor.RED + "Don't use '/'.");
             sendClickableCommand(player, (ChatColor.RED + "[CANCEL]"), "portal cancel");
 
-            PlayerChatManager.addPlayer(player, region);
-            PlayerManager.removePlayer(player);
+            addPlayer(player, region);
         }
 
         player.closeInventory();
+    }
+
+    private void removePlayer(Player player, Region region) {
+        PlayerManager.removePlayer(player);
+        PortalTeleport.getRegionMarkers().cancelMarkingRegion(region.getUUID());
+    }
+
+    private void addPlayer(Player player, Region region) {
+        PlayerChatManager.addPlayer(player, region);
+        PlayerManager.removePlayer(player);
     }
 
     private void sendClickableCommand(Player player, String message, String command) {
